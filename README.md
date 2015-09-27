@@ -34,7 +34,9 @@ array assumed to be a list of samples from the same parameter range and returns
 a list of pdfs with the corresponding non-parametric estimate for each of
 these. The default estimation method is `deft` and the rest of the parameters
 it accepts control the estimation process. See the code for a detailed
-explanation of each of the parameters.
+explanation of each of the parameters. In order for the deft method to work, 
+the file `deft.py` which is available at https://github.com/jbkinney/13_deft
+has to be placed in the same directory as `npfi.py` and your script.
 
 ### Computing the FI from the PDFs
 
@@ -42,6 +44,11 @@ The function `npfi` accepts either three or five pdfs and computes either the
 diagonal FI element or the off-diagonal element respectively of the Fisher
 information matrix. See the source code for exact implementation details and
 documentation of each of the input parameters.
+
+### Reproducing the figures
+
+To reproduce the figures, simply run `fig2.py`, `fig3.py`, or `fig4.py` using
+`python2`.
 
 Files
 -----
@@ -53,18 +60,18 @@ npfi.py:
     it will be able to use DEFT for the density estimation.
 
 fig2.py:
-    Reproduces Fig. 2 in [1] by simulating the data and computing the FI.
+    Reproduces Fig. 2 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
 
 fig3.py:
-    Reproduces Fig. 3 in [1] by simulating the data and computing the FI.
+    Reproduces Fig. 3 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
 
 fig4.py:
-    Reproduces Fig. 4 in [1] by simulating the data and computing the FI.
+    Reproduces Fig. 4 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
 
 
 Code
 ----
-http://github.com/omrihar/1_npfi
+https://github.com/omrihar/1_npfi
 
 References
 ----------
