@@ -63,7 +63,7 @@ fig2.py:
     Reproduces Fig. 2 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
 
 fig3.py:
-    Reproduces Fig. 3 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
+    Reproduces Fig. 3 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication. (On my laptop the runtime with the parameters of the paper took around 3.9 hours).
 
 fig4.py:
     Reproduces Fig. 4 in [1] by simulating the data and computing the FI. Note: this does not use the same seed as the original plot in the publication.
