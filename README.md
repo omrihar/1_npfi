@@ -48,6 +48,8 @@ documentation of each of the input parameters.
 
 ### Example: computing the $g_\sigma\sigma$ component of the FIM
 ```python
+    from npfi import npfi, get_pdfs_from_data
+
     # Compute g_ss for the Gaussian distribution
     s = 1.0
     ds = 0.1
