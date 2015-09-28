@@ -30,7 +30,7 @@ Dependencies:
     numpy
     scipy
     timeit
-    deft [2]
+    deft [2] https://github.com/jbkinney/13_deft
 
 License:
     The MIT License (MIT)
