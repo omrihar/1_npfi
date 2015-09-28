@@ -8,7 +8,7 @@ Written by:
     Omri Har-Shemesh, Computational Science Lab, University of Amsterdam
         O.HarShemesh@uva.nl
 
-Last updated on 25 September 2015
+Last updated on 28 September 2015
 
 Description:
     Estimation of Fisher information based on finite differences and
