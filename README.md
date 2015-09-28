@@ -46,7 +46,7 @@ diagonal FI element or the off-diagonal element respectively of the Fisher
 information matrix. See the source code for exact implementation details and
 documentation of each of the input parameters.
 
-### Example: computing the $g_\sigma\sigma$ component of the FIM
+### Example: computing the `g_ss` component of the FIM
 ```python
     from npfi import npfi, get_pdfs_from_data
 
