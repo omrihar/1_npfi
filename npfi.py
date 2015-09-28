@@ -15,7 +15,7 @@ Description:
     non-parametric density estimation.
 
 References:
-    [1] O. Har-Shemesh, R. Quax, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
+    [1] O. Har-Shemesh, R. Quax, B. Miñano, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
         estimation of Fisher information from real data, arxiv:1507.00964[stat.CO]
     [2] Kinney JB (2014) Estimation of probability densities using scale-free
         field theories. Phys Rev E 90:011301(R). arXiv:1312.6661 [physics.data-an].
@@ -34,19 +34,19 @@ Dependencies:
 
 License:
     The MIT License (MIT)
-    
+
     Copyright (c) 2015 Omri Har-Shemesh
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

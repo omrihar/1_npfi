@@ -123,6 +123,6 @@ https://github.com/omrihar/1_npfi
 
 References
 ----------
-[1] O. Har-Shemesh, R. Quax, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
+[1] O. Har-Shemesh, R. Quax, B. Miñano, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
         estimation of Fisher information from real data, (2015) arxiv:1507.00964[stat.CO]
 

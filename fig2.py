@@ -13,7 +13,7 @@ Description:
     Figure 2 in Ref.[1]
 
 References:
-    [1] O. Har-Shemesh, R. Quax, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
+    [1] O. Har-Shemesh, R. Quax, B. Miñano, A.G. Hoekstra, P.M.A. Sloot, Non-parametric
         estimation of Fisher information from real data, arxiv:1507.00964[stat.CO]
 Functions:
 
