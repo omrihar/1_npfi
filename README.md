@@ -15,9 +15,10 @@ Usage
 To compute the Fisher information from samples there are two steps necessary -
 computing probability density functions (pdfs) from the samples that are taken
 at known parameter values and combining these to compute the Fisher
-information. The file `npfi.py` provides two functions, one for each of these
-steps. To use these functions simply place `npfi.py` in the same directory as
-your script and import the necessary functions. For example:
+information. The file `npfi.py` provides three two functions, one for each of
+these steps and one to integrate the FI along a line. To use these functions
+simply place `npfi.py` in the same directory as your script and import the
+necessary functions. For example:
 
 ```python
     from npfi import npfi, get_pdfs_from_data
@@ -44,6 +45,51 @@ The function `npfi` accepts either three or five pdfs and computes either the
 diagonal FI element or the off-diagonal element respectively of the Fisher
 information matrix. See the source code for exact implementation details and
 documentation of each of the input parameters.
+
+### Example: computing the $g_\sigma\sigma$ component of the FIM
+```python
+    # Compute g_ss for the Gaussian distribution
+    s = 1.0
+    ds = 0.1
+    N = 5000
+    rep = 30
+    analytic_value = 2.0 / s
+
+    FIMs_kde = []
+    FIMs_deft = []
+    epsilons_kde = []
+    epsilons_deft = []
+    for i in range(rep):
+        Xa = normal(size=N, scale=s)
+        Xb = normal(size=N, scale=s-ds)
+        Xc = normal(size=N, scale=s+ds)
+
+        pdfs_deft, bbox_deft = get_pdfs_from_data([Xa, Xb, Xc], method="deft")  # DEFT
+        pdfs_kde, bbox_kde = get_pdfs_from_data([Xa, Xb, Xc], method="gaussian_kde")
+        FIM_deft, int_err_deft, epsilon_deft = npfi(pdfs_deft, ds, N=N, bounds=bbox_deft, logarithmic=False)
+        FIM_kde, int_err_kde, epsilon_kde = npfi(pdfs_kde, ds, N=N, bounds=bbox_kde, logarithmic=True)
+
+        FIMs_deft.append(FIM_deft)
+        FIMs_kde.append(FIM_kde)
+        epsilons_deft.append(FIM_deft)
+        epsilons_kde.append(FIM_kde)
+
+    print("#" * 50)
+    print("Estimation of the FI after %d repetitions:" % rep)
+    print("Analytic value: %.2f" % analytic_value)
+    print("FIM from DEFT: %.3f, epsilon=%.3f" % (np.mean(FIMs_deft), np.mean(epsilon_deft)))
+    print("FIM from KDE: %.3f, epsilon=%.3f" % (np.mean(FIMs_kde), np.mean(epsilon_kde)))
+    rel_deft = (np.mean(FIMs_deft) - analytic_value) / analytic_value
+    rel_deft_95 = (np.percentile(FIMs_deft, 95) - analytic_value) / analytic_value - rel_deft
+    rel_deft_5 = rel_deft - (np.percentile(FIMs_deft, 5) - analytic_value) / analytic_value
+    print("Relative error DEFT: %.5f + %.5f - %.5f" % (rel_deft, rel_deft_95, rel_deft_5))
+    rel_kde = (np.mean(FIMs_kde) - analytic_value) / analytic_value
+    rel_kde_95 = (np.percentile(FIMs_kde, 95) - analytic_value) / analytic_value - rel_kde
+    rel_kde_5 = rel_kde - (np.percentile(FIMs_kde, 5) - analytic_value) / analytic_value
+    print("Relative error KDE: %.5f + %.5f - %.5f" % (rel_kde, rel_kde_95, rel_kde_5))
+    print("#" * 50)
+
+```
 
 ### Reproducing the figures
 

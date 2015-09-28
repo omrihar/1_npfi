@@ -22,6 +22,7 @@ References:
 
 Functions:
     npfi
+    npfi_1d
     get_bbox
     get_pdfs_from_data
 
@@ -60,12 +61,10 @@ def npfi(pdfs, dt, bounds=(-np.inf, np.inf), logarithmic=True,
 
     Args:
         pdfs: A list of 3 or 5 pdf functions at the points where the FIM should
-            be estimated.
-            When three PDFs are supplied,
-            it is assumed that the diagonal element of the FIM is required. If 5
-            pdfs are supplied, then the off-diagonal element is computed. The
-            order with which the pdfs appear is assumed to follow the following
-            diagrams:
+            be estimated.  When three PDFs are supplied, it is assumed that the
+            diagonal element of the FIM is required. If 5 pdfs are supplied,
+            then the off-diagonal element is computed. The order with which the
+            pdfs appear is assumed to follow the following diagrams:
 
                 3 pdfs:       pdfs[1]   pdfs[0]   pdfs[2]
                 -------
@@ -184,6 +183,68 @@ def npfi(pdfs, dt, bounds=(-np.inf, np.inf), logarithmic=True,
         epsilon = np.sqrt(2.0 / (N * FIM * dt2))
         return FIM, int_err, epsilon
     return FIM, int_err, None
+
+def npfi_1d(pdfs, dt, bounds=(-np.inf, np.inf), logarithmic=True,
+                       zero=1e-10, simple=False, N=None, verbose=False):
+    """ Computes the Fisher information along a one dimensional line in
+        parameter space. The samples are supposed to be ordered along the line
+        with separation dt between each to pdfs.
+
+    Args:
+        pdfs: An array of PDFs, with at least three PDFs, that are all lying
+            in one line in parameter space, separated by an interval of dt.  The
+            PDFs should be functions defined on the interval bounds[0] to
+            bounds[1] at least.
+
+        dt: A float, the separation between the PDFs provided in pdfs.
+
+        bounds: This is the integration bounds on which the PDFs are defined. If
+            DEFT [2] was used to estimate the PDFs, this is the bbox parameter.
+            It is assumed that integration between the bounds of each PDF yields
+            unity.
+
+        logarithmic: There are two analytically equivalent formulas, which
+            however differ numerically that can be used [1]:
+            (1)   I = int p(x;theta) [d/dt1 ln p(x;theta)] * [d/dt2 ln p(x;theta)] dx
+            (2)   I = int [d/dt1 p(x;theta)] * [d/dt2 p(x;theta)] dx/p(x;theta)
+
+            When logarithmic = True (the default behavior) Eq.(1) is used, when
+            logarithmic = False Eq.(2) is used.
+
+        zero: The numerical definition of zero for the algorithm. If the value of
+            any of the densities provided in pdfs is below this value for some
+            x, the contribution to the integral is assumed to vanish.
+
+        simple: If True and not logarithmic, whenever any of the pdfs
+            given as input has a zero value, returns a zero for this point of
+            the integration. If False (default), depending on which of the pdfs
+            is zero, return the best approximation of the FIM with one of the
+            derivatives canceling (see Ref. [17] in [1] for more details).
+
+        N: The number of samples used to compute each of the pdfs. Used in the
+            estimation of the epsilon parameter [1].
+
+        verbose: If verbose prints out debug information such as run times.
+
+    Returns:
+        FIs: A numpy array of FI values, starting at the position of pdfs[1] and
+            with length len(pdfs)-2.
+
+        eps: A numpy array of epsilon values (see [1]) for each of the returned
+            FIs.
+
+    """
+    assert len(pdfs) >= 3
+    assert isinstance(dt, float)
+
+    shape = len(pdfs) - 2
+
+    FIs = np.zeros(shape=shape)
+    eps = np.zeros(shape=shape)
+    for i in range(shape):
+        FIs[i], err, eps[i] = npfi([pdfs[i+1], pdfs[i], pdfs[i+2]], dt, bounds,
+                                    logarithmic, zero, simple, N, verbose)
+    return FIs, eps
 
 
 def get_bbox(samples, multi_dim=True, factor=0.5):
